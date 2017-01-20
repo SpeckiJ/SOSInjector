@@ -35,7 +35,7 @@ func main() {
 	currentDate, _ := strconv.Atoi(t.Format("20060102"))
 
 	currentDate -= 1
-    
+
 	// Creating Sensor Objects
 	Data := getData(currentDate)
 
@@ -52,8 +52,6 @@ func getData(currentDate int) []*Sensor {
 	// Filling currentDate into URL
 	url := fmt.Sprintf("https://www.umweltbundesamt.de/luftdaten/stations/locations?pollutant=PM1&data_type=1TMW&date=%v", currentDate)
 
-    fmt.Println(url)
-    
 	// Build HTTP GET Request
 	req, err := http.NewRequest("GET", url, nil)
 	// Fehlerbehandlung
@@ -89,7 +87,7 @@ func getData(currentDate int) []*Sensor {
 	responseBodyCSV = strings.Replace(responseBodyCSV, "&ouml;", "ö", -1)
 	responseBodyCSV = strings.Replace(responseBodyCSV, "&szlig;", "ß", -1)
 	responseBodyCSV = "\"" + responseBodyCSV + "\""
-    
+
 	// Slice for Storing Sensors
 	sensors := []*Sensor{}
 
@@ -134,20 +132,19 @@ func postingDataToSOS(url string, body bytes.Buffer) bool {
 
 	// Posting POST Request to Server
 	client := &http.Client{}
-    _ , err := client.Do(req)
+	_, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 		return false
 	}
-    
-    // Uncomment to Export POST Responses to Commandline
-    // Additionally replace '_' with 'resp' in Line 137
-    
-    /*defer resp.Body.Close()
-    responseBodyBytes2, err := ioutil.ReadAll(resp.Body)
-     fmt.Println(bytes.NewBuffer(responseBodyBytes2).String()) */
-   
-	
+
+	// Uncomment to Export POST Responses to Commandline
+    // Additionally replace '_ , err = client.Do(req)' with 'resp , err := client.Do(req)' in Line 137
+
+	/*defer resp.Body.Close()
+	  responseBodyBytes2, err := ioutil.ReadAll(resp.Body)
+	   fmt.Println(bytes.NewBuffer(responseBodyBytes2).String()) */
+
 	return true
 }
 
