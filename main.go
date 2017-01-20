@@ -134,11 +134,20 @@ func postingDataToSOS(url string, body bytes.Buffer) bool {
 
 	// Posting POST Request to Server
 	client := &http.Client{}
-	_ , err = client.Do(req)
+    _ , err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 		return false
 	}
+    
+    // Uncomment to Export POST Responses to Commandline
+    // Additionally replace '_' with 'resp' in Line 137
+    
+    /*defer resp.Body.Close()
+    responseBodyBytes2, err := ioutil.ReadAll(resp.Body)
+     fmt.Println(bytes.NewBuffer(responseBodyBytes2).String()) */
+   
+	
 	return true
 }
 

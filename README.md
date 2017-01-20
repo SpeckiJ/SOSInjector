@@ -11,10 +11,11 @@ There is **NO** Documentation available as this program is not intended to be us
  
  [1]: https://uvlsf.uni-muenster.de/qisserver/rds?state=verpublish&status=init&vmfile=no&publishid=230590&moduleCall=webInfo&publishConfFile=webInfo&publishSubDir=veranstaltung " "
 
-
+##Dependencies
+ - goscv Library ([github repo][https://github.com/gocarina/gocsv])
 
 ##TODO:
- - Error Handling 
+ - Error Handling
  - Log File Parsing
  - CRON Job for automatic Insertion of Data
  - Improve XML Templates (remove Dummy Variables)

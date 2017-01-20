@@ -26,13 +26,13 @@
             <om:procedure xlink:href="{{.Title}} - procedure"/>
             <om:observedProperty xlink:href="{{.Valtype}}"/>
             <om:featureOfInterest>
-                <sams:SF_SpatialSamplingFeature gml:id="ssf_test_feature_9">
-                    <gml:identifier codeSpace="">http://www.52north.org/test/featureOfInterest/9</gml:identifier>
-                    <gml:name>52°North</gml:name>
+                <sams:SF_SpatialSamplingFeature gml:id="ssf_{{.Stationcode}}">
+                    <gml:identifier codeSpace="">{{.Stationcode}}</gml:identifier>
+                    <gml:name>{{.Stationcode}}</gml:name>
                     <sf:type xlink:href="http://www.opengis.net/def/samplingFeatureType/OGC-OM/2.0/SF_SamplingPoint"/>
-                    <sf:sampledFeature xlink:href="{{.Title}} - {{.Valtype}} - {{.RawVal}} - feature"/>
+                    <sf:sampledFeature xlink:href="{{.Stationcode}}"/>
                     <sams:shape>
-                        <gml:Point gml:id="test_feature_9">
+                        <gml:Point gml:id="{{.Stationcode}}">
                             <gml:pos srsName="http://www.opengis.net/def/crs/EPSG/0/4326">{{.Lat}} {{.Lon}}</gml:pos>
                         </gml:Point>
                     </sams:shape>
