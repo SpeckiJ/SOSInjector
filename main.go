@@ -34,7 +34,8 @@ func main() {
 	t := time.Now()
 	currentDate, _ := strconv.Atoi(t.Format("20060102"))
 
-	for i := 0; i < 5; i++ {
+	// Inserting Data for last 14 Days (last day is day prior)
+	for i := 0; i < 14; i++ {
 		currentDate -= 1
 
 		// Creating Sensor Objects
@@ -44,7 +45,7 @@ func main() {
 		formatValues(Data)
 
 		// Filling Templates and posting Data to SOS
-        // Insert Sensors only once
+		// Insert Sensors only once
 		if i == 0 {
 			insertDataIntoSOS(Data, "InsertSensor.xml")
 		}
@@ -144,14 +145,13 @@ func postingDataToSOS(url string, body bytes.Buffer) bool {
 		log.Fatal(err)
 		return false
 	}
-
 	defer resp.Body.Close()
 
 	// Uncomment to Export POST Responses to Commandline
-	// Additionally replace '_ , err = client.Do(req)' with 'resp , err := client.Do(req)' in Line 137
+	/*
+		responseBodyBytes2, err := ioutil.ReadAll(resp.Body)
+		fmt.Println(bytes.NewBuffer(responseBodyBytes2).String()) */
 
-	responseBodyBytes2, err := ioutil.ReadAll(resp.Body)
-	fmt.Println(bytes.NewBuffer(responseBodyBytes2).String())
 	resp.Body.Close()
 	return true
 }
