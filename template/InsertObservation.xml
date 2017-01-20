@@ -28,9 +28,9 @@
             <om:featureOfInterest>
                 <sams:SF_SpatialSamplingFeature gml:id="ssf_{{.Stationcode}}">
                     <gml:identifier codeSpace="">{{.Stationcode}}</gml:identifier>
-                    <gml:name>{{.Stationcode}}</gml:name>
+                    <gml:name>{{.Stationcode}} - NAME</gml:name>
                     <sf:type xlink:href="http://www.opengis.net/def/samplingFeatureType/OGC-OM/2.0/SF_SamplingPoint"/>
-                    <sf:sampledFeature xlink:href="{{.Stationcode}}"/>
+                    <sf:sampledFeature xlink:href="{{.Stationcode}} - DUMMY"/>
                     <sams:shape>
                         <gml:Point gml:id="{{.Stationcode}}">
                             <gml:pos srsName="http://www.opengis.net/def/crs/EPSG/0/4326">{{.Lat}} {{.Lon}}</gml:pos>

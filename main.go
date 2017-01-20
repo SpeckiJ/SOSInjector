@@ -34,17 +34,22 @@ func main() {
 	t := time.Now()
 	currentDate, _ := strconv.Atoi(t.Format("20060102"))
 
-	currentDate -= 1
+	for i := 0; i < 5; i++ {
+		currentDate -= 1
 
-	// Creating Sensor Objects
-	Data := getData(currentDate)
+		// Creating Sensor Objects
+		Data := getData(currentDate)
 
-	// Format Values inside Sensor struct
-	formatValues(Data)
+		// Format Values inside Sensor struct
+		formatValues(Data)
 
-	// Filling Templates and posting Data to SOS
-	insertDataIntoSOS(Data, "InsertSensor.xml")
-	insertDataIntoSOS(Data, "InsertObservation.xml")
+		// Filling Templates and posting Data to SOS
+        // Insert Sensors only once
+		if i == 0 {
+			insertDataIntoSOS(Data, "InsertSensor.xml")
+		}
+		insertDataIntoSOS(Data, "InsertObservation.xml")
+	}
 }
 
 func getData(currentDate int) []*Sensor {
@@ -59,6 +64,7 @@ func getData(currentDate int) []*Sensor {
 		log.Fatal("Error on building Request to Data Server", err)
 		return nil
 	}
+	req.Close = true
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -95,6 +101,7 @@ func getData(currentDate int) []*Sensor {
 	if err := gocsv.UnmarshalString(responseBodyCSV, &sensors); err != nil {
 		log.Fatal("Error Converting CSV to struct")
 	}
+	resp.Body.Close()
 
 	return sensors
 }
@@ -132,19 +139,20 @@ func postingDataToSOS(url string, body bytes.Buffer) bool {
 
 	// Posting POST Request to Server
 	client := &http.Client{}
-	_, err = client.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 		return false
 	}
 
+	defer resp.Body.Close()
+
 	// Uncomment to Export POST Responses to Commandline
-    // Additionally replace '_ , err = client.Do(req)' with 'resp , err := client.Do(req)' in Line 137
+	// Additionally replace '_ , err = client.Do(req)' with 'resp , err := client.Do(req)' in Line 137
 
-	/*defer resp.Body.Close()
-	  responseBodyBytes2, err := ioutil.ReadAll(resp.Body)
-	   fmt.Println(bytes.NewBuffer(responseBodyBytes2).String()) */
-
+	responseBodyBytes2, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(bytes.NewBuffer(responseBodyBytes2).String())
+	resp.Body.Close()
 	return true
 }
 

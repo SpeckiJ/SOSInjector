@@ -54,7 +54,7 @@
                         <swe:SimpleDataRecord>
                             <swe:field name="featureOfInterestID">
                                 <swe:Text>
-                                    <swe:value>{{.Stationcode}}
+                                    <swe:value>{{.Stationcode}} - DUMMY
 									</swe:value>
                                 </swe:Text>
                             </swe:field>
